@@ -5,19 +5,27 @@ permissions:
 
 on:
   schedule:
+    # Runs once per day (UTC), actual commit time will be randomized
     - cron: '0 0 * * *'
   workflow_dispatch:
 
 jobs:
-  update-contribution:
+  auto-contribute:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
         with:
           persist-credentials: true
 
-      - name: Make a commit
+      # Random delay between 0 and 6 hours
+      - name: Random delay
+        run: |
+          echo "Sleeping for a random time..."
+          sleep $((RANDOM % 21600))
+
+      - name: Make daily commit
         run: |
           echo "Daily update: $(date)" >> log.txt
           git config user.email "action@github.com"
