@@ -1,74 +1,58 @@
-<h1>🤖 Auto Contribution Bot</h1>
+# 🤖 Auto Contribution Bot
 
-<p>
-<b>Status:</b> <span style="color:limegreen;"><b>● LIVE & WORKING</b></span> <br>
-<b>Maintained by:</b> <b>Naboraj Sarkar (Nishant)</b> <br>
-<b>Category:</b> GitHub Automation • Dev Tools • Productivity <br>
-<b>Vibe:</b> 🎮 Gaming × 💻 Code × 🤖 Automation
-</p>
+**Status:** <span style="color:limegreen;">● LIVE & WORKING</span>  
+**Maintained by:** Naboraj Sarkar (Nishant)  
+**Category:** GitHub Automation • Dev Tools • Productivity  
+**Vibe:** 🎮 Gaming × 💻 Code × 🤖 Automation × 💙 Blue Energy
 
-<hr>
+---
 
-<h2>🔥 What this bot does</h2>
+## 🔥 What This Bot Does
 
-<p>
-Auto Contribution Bot is a lightweight GitHub Actions–powered automation that creates
-<b>one safe, natural-looking contribution every day</b> to keep the GitHub contribution
-graph active and consistent.
-</p>
+Auto Contribution Bot is a lightweight GitHub Actions-powered tool that automatically creates **one safe, natural-looking contribution every day** to keep your GitHub graph green and your streak alive. Perfect for busy devs and gamers who want consistency without the grind.
 
-<ul>
-  <li>✅ Runs automatically every day</li>
-  <li>🎲 Uses a short random delay (anti-bot pattern)</li>
-  <li>🟢 Keeps contribution streak alive</li>
-  <li>⚙️ Zero manual effort after setup</li>
-  <li>🔐 No personal access tokens required</li>
-</ul>
+- ✅ Runs daily on autopilot
+- 🎲 Random delay (0–2 hours) for a human-like touch
+- 🟢 Builds real green squares (using your email)
+- ⚙️ Zero ongoing effort after setup
+- 🔐 Uses built-in GITHUB_TOKEN—no extra tokens needed
 
-<hr>
+---
 
-<h2>🧠 How it works (technical)</h2>
+## 🧠 How It Works (Technical Breakdown)
 
-<ol>
-  <li>GitHub Actions triggers the workflow once per day (UTC)</li>
-  <li>Repository is securely checked out</li>
-  <li>A random delay (0–2 hours) is applied</li>
-  <li>The current timestamp is appended to <code>log.txt</code></li>
-  <li>The change is committed and pushed using <code>GITHUB_TOKEN</code></li>
-</ol>
+1. GitHub Actions schedules a daily trigger (07:00 UTC ≈ 12:30 PM IST).
+2. Repo is checked out securely.
+3. Applies a random delay to avoid patterns.
+4. Appends a timestamped line to `log.txt` (in IST timezone).
+5. Commits and pushes using your details for authentic contributions.
 
-<p>
-The delay window is intentionally limited to avoid workflow timeouts and to ensure
-<b>no day is ever skipped</b>.
-</p>
+The limited delay ensures no skips, and it only commits if there's a real change—bulletproof and efficient.
 
-<hr>
+---
 
-<h2>📁 Project structure</h2>
+## 📁 Project Structure
 
-<pre>
+```
 .github/
  └── workflows/
-     └── daily.yml   (automation workflow)
-log.txt              (daily auto-updated file)
-README.md
-</pre>
+     └── daily.yml (the magic automation file)
+log.txt (daily updated log file)
+README.md (this file)
+```
 
-<hr>
+---
 
-<h2>🚀 Setup / Re-Setup Guide</h2>
+## 🚀 Quick Setup Guide
 
-<h3>1️⃣ Create a GitHub repository</h3>
-<ul>
-  <li>Public or private (both count for contributions)</li>
-  <li>Default branch must be <code>main</code></li>
-</ul>
+### 1️⃣ Create a New Repo
+- Make it public or private (both work for contributions).
+- Use `main` as the default branch.
 
-<h3>2️⃣ Create workflow file</h3>
+### 2️⃣ Add the Workflow File
+Create `.github/workflows/daily.yml` and paste this:
 
-<pre>.github/workflows/daily.yml</pre>
-
-<pre>
+```yaml
 name: Daily Contribution
 
 permissions:
@@ -76,115 +60,93 @@ permissions:
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 7 * * *'  # 07:00 UTC ≈ 12:30 PM IST
   workflow_dispatch:
 
 jobs:
   auto-contribute:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: true
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Random delay
-        run: sleep $((RANDOM % 7200))
+      - name: Random delay (0–2 hours, more natural)
+        run: sleep $((RANDOM % 7200 + 300))  # min 5 min delay
 
-      - name: Make daily commit
+      - name: Make daily commit (IST timezone)
         run: |
-          echo "Daily update: $(date)" >> log.txt
-          git config user.email "action@github.com"
-          git config user.name "GitHub Actions"
+          export TZ=Asia/Kolkata
+
+          # Safety: create file if missing
+          touch log.txt
+
+          # Append fresh line with timestamp
+          echo "Daily auto update: $(date '+%Y-%m-%d %H:%M:%S %Z')" >> log.txt
+
+          git config user.name "NABORAJ SARKAR"
+          git config user.email "nishant.ns.business@gmail.com"
+
           git add log.txt
-          git commit -m "chore: daily contribution" || echo "No changes"
-          git push
-</pre>
 
-<h3>3️⃣ Commit to main</h3>
-<p>That’s it. The bot is now active.</p>
+          # Commit only if changes exist
+          git diff --staged --quiet || git commit -m "chore: daily contribution $(date '+%Y-%m-%d')"
 
-<hr>
+          git push origin HEAD
+```
 
-<h2>🧪 Testing</h2>
+### 3️⃣ Commit and Push
+Push the file to `main`. Boom—the bot's live!
 
-<ul>
-  <li>Go to <b>Actions</b></li>
-  <li>Select <b>Daily Contribution</b></li>
-  <li>Click <b>Run workflow</b></li>
-</ul>
+**Pro Tip:** Verify your email (`nishant.ns.business@gmail.com`) is added in GitHub Settings > Emails. For private repos, enable "Include private contributions" in your profile settings.
 
-<p>
-A successful run creates a commit and updates <code>log.txt</code>.
-</p>
+---
 
-<hr>
+## 🧪 Testing It Out
+- Head to your repo's **Actions** tab.
+- Select **Daily Contribution**.
+- Click **Run workflow** (manual trigger).
+- Watch the logs—success means a new commit and green square in 5–30 mins.
 
-<h2>⏰ Execution timing</h2>
+---
 
-<ul>
-  <li>Trigger time: 00:00 UTC</li>
-  <li>Actual commit: random within 0–2 hours</li>
-  <li>IST: approx 5:30 AM – 7:30 AM</li>
-</ul>
+## ⏰ Timing Details
+- **Trigger:** 07:00 UTC (≈ 12:30 PM IST).
+- **Actual Commit:** Random within 0–2 hours after.
+- **Why IST?** Tailored for devs in India like us in Siliguri—keeps it daytime fresh.
 
-<hr>
+---
 
-<h2>⚠️ Warnings & ethics</h2>
+## ⚠️ Warnings & Ethics
+- This is for **genuine consistency**, not faking skills.
+- Stick to one commit/day—don't spam or loop.
+- Over-automation can flag as unnatural; keep it subtle.
+- Real code > green squares. Use this to build habits, not hype.
 
-<ul>
-  <li>This bot is for <b>consistency</b>, not fake productivity</li>
-  <li>Do NOT increase commits to multiple times per day</li>
-  <li>Do NOT spam or loop commits</li>
-  <li>Over-automation can look unnatural</li>
-  <li>Real projects matter more than green squares</li>
-</ul>
+Automation rocks, but pair it with actual projects for that true gamer-dev win.
 
-<p>
-Use responsibly.  
-Automation should support learning — not replace it.
-</p>
+---
 
-<hr>
+## 🎮 Gaming × Developer Vibe
+Built by a Siliguri-based Hindu Bengali dev who loves blue vibes 💙. I believe in:
+- ⚡ Systems that level up your grind.
+- 🎯 Automation to free up time for gaming and coding.
+- 🧠 Consistency as the ultimate power-up.
 
-<h2>🎮 Gaming × Developer Vibe</h2>
+---
 
-<p>
-Built by a gamer-developer who believes in:
-</p>
+## 🌐 About Me & Socials
+**Naboraj Sarkar (Nishant)**  
+Student • Developer • Gamer • Content Creator from Siliguri, West Bengal, India.
 
-<ul>
-  <li>⚡ Consistency over hype</li>
-  <li>🎯 Systems over motivation</li>
-  <li>🧠 Automation over repetition</li>
-</ul>
+- 🌐 Website: [nsgamming.xyz](https://nsgamming.xyz)
+- 🐙 GitHub: [NABORAJ'S](https://github.com/naborajs)
+- ▶️ YouTube: [NS GAMMiNG](https://youtube.com/@Nishant_sarkar)
+- 📸 Instagram: [@NABORAJ SARKAR](https://instagram.com/naborajs)
+- 🐦 X (Twitter): [@NSGAMMING699](https://x.com/NSGAMMING699)
+- 💬 Telegram: [@nsgamming69](https://t.me/nsgamming69)
+- 💼 LinkedIn: [Naboraj Sarkar](https://linkedin.com/in/naboraj-sarkar)
 
-<hr>
+---
 
-<h2>🌐 Branding & Socials</h2>
-
-<p>
-<b>Naboraj Sarkar (Nishant)</b><br>
-Student • Developer • Gamer • Content Creator
-</p>
-
-<ul>
-  <li>🌐 Website: <a href="https://nsgamming.xyz">https://nsgamming.xyz</a></li>
-  <li>🐙 GitHub: <a href="https://github.com/naborajs">NABORAJ'S</a></li>
-  <li>▶️ YouTube: <a href="https://youtube.com/@Nishant_sarkar">NS GAMMiNG</a></li>
-  <li>📸 Instagram: <a href="https://instagram.com/naborajs">@NABORAJ SARKAR</a></li>
-  <li>🐦 X (Twitter): <a href="https://x.com/NSGAMMING699">@NSGAMMING699</a></li>
-  <li>💬 Telegram: <a href="https://t.me/nsgamming69">@nsgamming69</a></li>
-  <li>💼 LinkedIn: <a href="https://linkedin.com/in/naboraj-sarkar">Naboraj Sarkar</a></li>
-</ul>
-
-<hr>
-
-<h2>🔍 SEO Keywords</h2>
-
-<p>
-GitHub automation, GitHub contribution bot, GitHub Actions automation,
-developer productivity tools, coding consistency, daily GitHub commits,
-automation for developers, GitHub portfolio projects, NS GAMMiNG,
-Naboraj Sarkar developer
-</p>
+## 🔍 SEO Keywords
+GitHub automation, auto contribution bot, GitHub Actions daily commit, developer productivity tools, coding streak maintainer, natural GitHub contributions, automation for devs, GitHub portfolio booster, NS GAMMiNG projects, Naboraj Sarkar developer, Nishant Sarkar GitHub.
