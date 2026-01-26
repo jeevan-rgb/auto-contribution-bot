@@ -5,7 +5,7 @@ permissions:
 
 on:
   schedule:
-    # 07:00 UTC = ~12:30 PM IST
+    # 07:00 UTC = 12:30 PM IST
     - cron: '0 7 * * *'
   workflow_dispatch:
 
@@ -18,16 +18,26 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Random delay (0–2 hours)
-        run: sleep $((RANDOM % 2400 + 1))
+        run: sleep $((RANDOM % 7200))
 
       - name: Make daily commit (IST)
         run: |
           export TZ=Asia/Kolkata
-          echo "Daily auto update: $(date '+%Y-%m-%d %H:%M:%S %Z')" >> log.txt
 
-          git config user.name "NABORAJ SARKAR"
-          git config user.email "nishant.ns.business@gmail.com"
+          DATE=$(date '+%Y-%m-%d')
+          DAY=$(date '+%A')
+          TIME=$(date '+%H:%M:%S %Z')
+          WEEK=$(date '+%V')
+
+          NOTES=("Daily update" "Routine maintenance" "System check" "Minor changes" "Log refresh")
+          NOTE=${NOTES[$RANDOM % ${#NOTES[@]}]}
+
+          printf "%-10s | %-9s | %-11s | Week %-2s | %s\n" \
+          "$DATE" "$DAY" "$TIME" "$WEEK" "$NOTE" >> log.txt
+
+          git config --global user.name "NABORAJ SARKAR"
+          git config --global user.email "nishant.ns.business@gmail.com"
 
           git add log.txt
-          git diff --staged --quiet || git commit -m "chore: daily contribution $(date '+%Y-%m-%d')"
+          git diff --staged --quiet || git commit -m "chore: daily log ($DATE)"
           git push
